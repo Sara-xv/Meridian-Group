@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش کیفیت داده — training_enrollments.csv</title>
+<style>
+
+:root {
+    --bg: #0f1420;
+    --bg-card: #171d2e;
+    --bg-card-alt: #1c2338;
+    --border: #2a3350;
+    --text-primary: #e8ecf5;
+    --text-secondary: #9aa5c0;
+    --text-dim: #6b7591;
+    --accent: #5b8cff;
+    --accent-soft: rgba(91, 140, 255, 0.12);
+    --green: #4ade80;
+    --green-soft: rgba(74, 222, 128, 0.12);
+    --yellow: #fbbf24;
+    --yellow-soft: rgba(251, 191, 36, 0.12);
+    --red: #f87171;
+    --red-soft: rgba(248, 113, 113, 0.12);
+    --radius: 14px;
+    font-family: 'Segoe UI', Tahoma, 'Vazirmatn', 'IRANSans', Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+    background: linear-gradient(180deg, #0b0f19 0%, #0f1420 100%);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 32px 16px 64px;
+    line-height: 1.75;
+}
+.container { max-width: 1180px; margin: 0 auto; }
+
+/* Header */
+.report-header {
+    background: linear-gradient(135deg, #1a2036 0%, #141a2c 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+.report-header::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(600px circle at 85% -10%, var(--accent-soft), transparent 60%);
+    pointer-events: none;
+}
+.report-header h1 { margin: 0 0 6px; font-size: 26px; font-weight: 700; color: #fff; }
+.report-header .subtitle { color: var(--text-secondary); font-size: 14px; margin: 0; }
+.header-meta {
+    display: flex; flex-wrap: wrap; gap: 22px; margin-top: 20px;
+    padding-top: 18px; border-top: 1px solid var(--border);
+}
+.header-meta .meta-item { font-size: 13px; color: var(--text-secondary); }
+.header-meta .meta-item b { color: var(--text-primary); font-weight: 600; }
+
+/* Summary cards */
+.cards-grid {
+    display: flex; flex-wrap: wrap;
+    gap: 14px; margin-bottom: 24px;
+}
+.card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    flex: 1 1 160px; min-width: 160px;
+}
+.card .card-label { font-size: 12.5px; color: var(--text-dim); margin-bottom: 8px; }
+.card .card-value { font-size: 26px; font-weight: 700; color: var(--text-primary); }
+.card .card-sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.card.accent-green .card-value { color: var(--green); }
+.card.accent-yellow .card-value { color: var(--yellow); }
+.card.accent-red .card-value { color: var(--red); }
+.card.accent-blue .card-value { color: var(--accent); }
+
+/* Sections */
+.section {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 26px 28px; margin-bottom: 20px;
+}
+.section h2 {
+    font-size: 18px; margin: 0 0 4px; color: #fff; display: flex; align-items: center; gap: 10px;
+}
+.section h2 .icon-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0;
+}
+.section .section-desc { font-size: 13px; color: var(--text-secondary); margin: 0 0 18px; }
+.section .empty-state {
+    background: var(--green-soft); border: 1px solid rgba(74,222,128,0.25);
+    color: var(--green); padding: 14px 18px; border-radius: 10px; font-size: 14px;
+}
+
+/* Score */
+.score-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.score-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    flex: 0 0 120px; border: 6px solid var(--border);
+}
+.score-circle .score-num { font-size: 28px; font-weight: 800; line-height: 1.2; }
+.score-circle .score-max { font-size: 11px; color: var(--text-dim); }
+.score-text-block { flex: 1 1 320px; min-width: 240px; }
+.score-verdict { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.score-disclaimer { font-size: 12px; color: var(--text-dim); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 6px; }
+thead th {
+    text-align: right; background: var(--bg-card-alt); color: var(--text-secondary);
+    font-weight: 600; padding: 10px 14px; border-bottom: 1px solid var(--border);
+    white-space: nowrap; position: sticky; top: 0;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-primary); vertical-align: top; }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+tbody tr:last-child td { border-bottom: none; }
+.table-scroll { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+.mono { font-family: 'Consolas', 'Courier New', monospace; font-size: 12.5px; color: var(--text-secondary); }
+
+/* Badges */
+.badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 600; white-space: nowrap;
+}
+.badge-blue { background: var(--accent-soft); color: var(--accent); }
+.badge-green { background: var(--green-soft); color: var(--green); }
+.badge-yellow { background: var(--yellow-soft); color: var(--yellow); }
+.badge-red { background: var(--red-soft); color: var(--red); }
+.badge-gray { background: rgba(154,165,192,0.12); color: var(--text-secondary); }
+
+/* Progress bar (for score breakdown / missing %) */
+.bar-track {
+    background: var(--bg-card-alt); border-radius: 999px; height: 8px; width: 100%;
+    overflow: hidden; min-width: 80px;
+}
+.bar-fill { height: 100%; border-radius: 999px; }
+
+/* Column kind grid */
+.kind-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.kind-legend .legend-chip {
+    font-size: 12px; padding: 5px 12px; border-radius: 8px;
+    background: var(--bg-card-alt); color: var(--text-secondary); border: 1px solid var(--border);
+}
+.kind-legend .legend-chip b { color: var(--text-primary); }
+
+.note-box {
+    background: var(--accent-soft); border: 1px solid rgba(91,140,255,0.25);
+    border-radius: 10px; padding: 14px 18px; font-size: 13px; color: var(--text-secondary); margin-top: 14px;
+}
+.footer-note {
+    text-align: center; color: var(--text-dim); font-size: 12px; margin-top: 28px; line-height: 2;
+}
+.chart-wrap { margin-top: 18px; text-align: center; }
+.chart-wrap img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); }
+
+.sub-issue { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border); }
+.sub-issue:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.sub-issue .sub-issue-title { font-weight: 600; font-size: 13.5px; color: var(--text-primary); }
+.sub-issue .sub-issue-desc { font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; }
+
+@media (max-width: 640px) {
+    .report-header { padding: 22px 18px; }
+    .section { padding: 18px 16px; }
+    .score-wrap { gap: 16px; }
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="report-header">
+    <h1>📊 گزارش تحلیل کیفیت داده</h1>
+    <p class="subtitle">تولید شده به‌صورت خودکار — Data Quality &amp; Profiling Report</p>
+    <div class="header-meta">
+        <div class="meta-item">فایل: <b><span dir="ltr" style="unicode-bidi:isolate;">training_enrollments.csv</span></b></div>
+        <div class="meta-item">زمان تحلیل: <b><span dir="ltr" style="unicode-bidi:isolate;">2026-08-30 18:02:31</span></b></div>
+        <div class="meta-item">ابعاد: <b><span dir="ltr" style="unicode-bidi:isolate;">20,132</span> ردیف × <b><span dir="ltr" style="unicode-bidi:isolate;">9</span></b> ستون</b></div>
+        <div class="meta-item">حجم حافظه: <b><span dir="ltr" style="unicode-bidi:isolate;">6.99 MB</span></b></div>
+        <div class="meta-item">فرمت منبع: <b><span dir="ltr" style="unicode-bidi:isolate;">csv</span></b></div>
+    </div>
+</div>
+
+<div class="cards-grid"><div class="card accent-blue">
+                <div class="card-label">تعداد ردیف</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">20,132</span></div>
+                <div class="card-sub"><span dir="ltr" style="unicode-bidi:isolate;">9</span> ستون</div>
+            </div><div class="card accent-red">
+                <div class="card-label">سلول‌های گمشده</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">12,570</span></div>
+                <div class="card-sub"><span dir="ltr" style="unicode-bidi:isolate;">6.94%</span> از کل</div>
+            </div><div class="card accent-green">
+                <div class="card-label">ردیف‌های تکراری</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">0</span></div>
+                <div class="card-sub"><span dir="ltr" style="unicode-bidi:isolate;">0.00%</span> از کل</div>
+            </div><div class="card accent-yellow">
+                <div class="card-label">ستون‌های دارای Outlier</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">3</span></div>
+                <div class="card-sub">از <span dir="ltr" style="unicode-bidi:isolate;">3</span> ستون عددی</div>
+            </div><div class="card accent-green">
+                <div class="card-label">مقادیر نامعتبر</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">0</span></div>
+                <div class="card-sub">بر اساس قواعد منطقی</div>
+            </div><div class="card accent-blue">
+                <div class="card-label">ستون‌های شناسه</div>
+                <div class="card-value"><span dir="ltr" style="unicode-bidi:isolate;">1</span></div>
+                <div class="card-sub">از تحلیل آماری کنار گذاشته شدند</div>
+            </div></div>
+
+<div class="section">
+    <h2><span class="icon-dot"></span> امتیاز کلی کیفیت داده (Data Quality Score)</h2>
+    <p class="section-desc">این امتیاز صرفاً یک شاخص راهنماست، نه معیار علمی قطعی — جزئیات محاسبه در جدول زیر شفاف است.</p>
+    <div class="score-wrap">
+        <div class="score-circle" style="border-color:var(--yellow);">
+            <div class="score-num" style="color:var(--yellow);"><span dir="ltr" style="unicode-bidi:isolate;">79.0</span></div>
+            <div class="score-max">از ۱۰۰</div>
+        </div>
+        <div class="score-text-block">
+            <div class="score-verdict" style="color:var(--yellow);">کیفیت خوب، نیاز به بررسی جزئی</div>
+            <div class="score-disclaimer">این امتیاز صرفاً یک شاخص راهنما بر اساس قواعد وزن‌دهی‌شده‌ی از پیش تعریف‌شده است، نه یک معیار علمی قطعی. اهمیت واقعی هر مشکل به زمینه (Context) کسب‌وکار و هدف تحلیل بستگی دارد.</div>
+        </div>
+    </div>
+    <div class="table-scroll" style="margin-top:20px;">
+        <table>
+            <thead><tr><th>دسته مشکل</th><th>سهم از جریمه</th><th>جریمه/سقف</th><th>مبنای محاسبه</th></tr></thead>
+            <tbody>
+            <tr>
+                <td>Missing Values</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:35%; background:var(--yellow);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">8.67 / 25</span></td>
+                <td>6.94% کل سلول‌ها گمشده‌اند (هر ۲۰٪ ≈ کل سهم این دسته).</td>
+            </tr>
+            <tr>
+                <td>Duplicate Rows/Values</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:0%; background:var(--green);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">0.0 / 15</span></td>
+                <td>0.00% ردیف‌ها تکراری‌اند (هر ۱۰٪ ≈ کل سهم این دسته).</td>
+            </tr>
+            <tr>
+                <td>Outliers</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:53%; background:var(--yellow);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">7.88 / 15</span></td>
+                <td>میانگین 7.88% مقادیر ستون‌های عددی به‌عنوان Outlier پرچم خورده‌اند.</td>
+            </tr>
+            <tr>
+                <td>Invalid Values</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:0%; background:var(--green);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">0.0 / 20</span></td>
+                <td>0 مقدار غیرمنطقی/غیرممکن شناسایی شد (0.00% کل سلول‌ها).</td>
+            </tr>
+            <tr>
+                <td>Inconsistencies</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:0%; background:var(--green);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">0.0 / 15</span></td>
+                <td>0 از 9 ستون دارای ناسازگاری فرمتی/متنی هستند.</td>
+            </tr>
+            <tr>
+                <td>Data Type Issues</td>
+                <td style="width:160px;">
+                    <div class="bar-track"><div class="bar-fill" style="width:44%; background:var(--yellow);"></div></div>
+                </td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">4.44 / 10</span></td>
+                <td>2 از 9 ستون مشکل نوع داده دارند.</td>
+            </tr></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> نمای کلی ستون‌ها و نوع منطقی داده</h2>
+    <p class="section-desc">نوع منطقی هر ستون فراتر از dtype خام pandas تشخیص داده شده تا تحلیل‌های بعدی (Outlier، Invalid و ...) روی نوع درست اجرا شوند.</p>
+    <div class="kind-legend"><div class="legend-chip"><b>3</b> عددی</div><div class="legend-chip"><b>3</b> دسته‌ای</div><div class="legend-chip"><b>2</b> تاریخ/زمان</div><div class="legend-chip"><b>1</b> شناسه (ID)</div></div>
+    <div class="table-scroll">
+        <table>
+            <thead><tr><th>ستون</th><th>نوع منطقی</th><th>dtype خام</th><th>دلیل تشخیص</th></tr></thead>
+            <tbody>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">enrollment_id</span></b></td>
+                <td><span class="badge badge-yellow">شناسه (ID)</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>نام ستون الگوی شناسه دارد و Cardinality آن 100% است (20132 مقدار یکتا از 20132).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">employee_id</span></b></td>
+                <td><span class="badge badge-green">دسته‌ای</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>تعداد دسته‌های محدود (3369) و طول متوسط کوتاه (8 کاراکتر).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">program_id</span></b></td>
+                <td><span class="badge badge-green">دسته‌ای</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>تعداد دسته‌های محدود (31) و طول متوسط کوتاه (6 کاراکتر).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">enrollment_date</span></b></td>
+                <td><span class="badge badge-blue">تاریخ/زمان</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>ستون به صورت متنی ذخیره شده اما الگوی تاریخ دارد (مشکل Data Type).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">completion_status</span></b></td>
+                <td><span class="badge badge-green">دسته‌ای</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>تعداد دسته‌های محدود (3) و طول متوسط کوتاه (9 کاراکتر).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">completion_pct</span></b></td>
+                <td><span class="badge badge-blue">عددی</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">float64</span></td>
+                <td>نوع پایه ستون عددی است.</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">completion_date</span></b></td>
+                <td><span class="badge badge-blue">تاریخ/زمان</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></td>
+                <td>ستون به صورت متنی ذخیره شده اما الگوی تاریخ دارد (مشکل Data Type).</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">assessment_score</span></b></td>
+                <td><span class="badge badge-blue">عددی</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">float64</span></td>
+                <td>نوع پایه ستون عددی است.</td>
+            </tr>
+            <tr>
+                <td><b><span dir="ltr" style="unicode-bidi:isolate;">participant_satisfaction_1to5</span></b></td>
+                <td><span class="badge badge-blue">عددی</span></td>
+                <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">float64</span></td>
+                <td>نوع پایه ستون عددی است.</td>
+            </tr></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Missing Values</h2>
+    <p class="section-desc">شامل NaN واقعی و رشته‌های معادل آن (مثل "N/A"، "-"، "null" و ...).</p>
+    
+            <div class="table-scroll">
+                <table>
+                    <thead><tr><th>ستون</th><th>تعداد گمشده</th><th>درصد</th></tr></thead>
+                    <tbody>
+                <tr>
+                    <td><b><span dir="ltr" style="unicode-bidi:isolate;">completion_date</span></b></td>
+                    <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">4,458</span></td>
+                    <td style="width:180px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div class="bar-track"><div class="bar-fill" style="width:22%; background:var(--red);"></div></div>
+                            <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">22.14%</span></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b><span dir="ltr" style="unicode-bidi:isolate;">assessment_score</span></b></td>
+                    <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">4,458</span></td>
+                    <td style="width:180px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div class="bar-track"><div class="bar-fill" style="width:22%; background:var(--red);"></div></div>
+                            <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">22.14%</span></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b><span dir="ltr" style="unicode-bidi:isolate;">participant_satisfaction_1to5</span></b></td>
+                    <td class="mono"><span dir="ltr" style="unicode-bidi:isolate;">3,654</span></td>
+                    <td style="width:180px;">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div class="bar-track"><div class="bar-fill" style="width:18%; background:var(--yellow);"></div></div>
+                            <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">18.15%</span></span>
+                        </div>
+                    </td>
+                </tr></tbody>
+                </table>
+            </div>
+            <p class="section-desc" style="margin-top:14px;">
+                <span dir="ltr" style="unicode-bidi:isolate;">4,458</span> ردیف حداقل یک مقدار گمشده دارند
+                (از <span dir="ltr" style="unicode-bidi:isolate;">20,132</span> ردیف کل)،
+                و <span dir="ltr" style="unicode-bidi:isolate;">0</span> ردیف کاملاً خالی هستند.
+            </p>
+            <div class="note-box"><b>الگوهای هم‌رخدادی:</b><ul><li>الگوی هم‌رخدادی: مقادیر گمشده در «completion_date» و «assessment_score» همبستگی بالایی دارند (r=1.00)؛ احتمالاً علت مشترکی دارند.</li><li>الگوی هم‌رخدادی: مقادیر گمشده در «completion_date» و «participant_satisfaction_1to5» همبستگی بالایی دارند (r=0.88)؛ احتمالاً علت مشترکی دارند.</li><li>الگوی هم‌رخدادی: مقادیر گمشده در «assessment_score» و «participant_satisfaction_1to5» همبستگی بالایی دارند (r=0.88)؛ احتمالاً علت مشترکی دارند.</li></ul></div>
+            
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Duplicate Rows / Values</h2>
+    <p class="section-desc">ردیف‌های کاملاً یکسان در تمام ستون‌ها، و همچنین تکرار در ستون‌هایی که انتظار یکتایی می‌رود (شناسه‌ها).</p>
+    <div class="empty-state">✅ هیچ ردیف یا شناسه تکراری‌ای شناسایی نشد.</div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Outlier Detection</h2>
+    <p class="section-desc">
+        فقط روی ستون‌های عددی اجرا می‌شود. روش‌ها بر اساس حجم نمونه و چولگی (Skewness) توزیع هر ستون به‌صورت خودکار انتخاب می‌شوند:
+        IQR (مقاوم، همیشه محاسبه می‌شود)، Z-Score (فقط برای توزیع‌های نزدیک به نرمال با نمونه کافی)،
+        و Modified Z-Score مبتنی بر MAD (مقاوم در برابر چولگی و outlier شدید).
+    </p>
+    
+                <div class="sub-issue">
+                    <div class="sub-issue-title"><span dir="ltr" style="unicode-bidi:isolate;">completion_pct</span>
+                        <span class="badge badge-yellow"><span dir="ltr" style="unicode-bidi:isolate;">4,312 outlier (21.42%)</span></span>
+                        <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">IQR</span></span> <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">Modified Z-Score (MAD)</span></span>
+                    </div>
+                    <div class="sub-issue-desc">
+                        <b>دلیل انتخاب روش:</b> حجم داده معتبر: 20132. چولگی (Skewness) = -1.68 → توزیع نامتقارن است. به‌دلیل چولگی بالا، Z-Score رد شد و بر IQR/Modified Z-Score (مقاوم‌تر) تکیه شد.<br>
+                        <b>بازه نرمال (IQR):</b> <span dir="ltr" style="unicode-bidi:isolate;">76.55 تا 112.15</span><br>
+                        <b>آمار توصیفی:</b> <span dir="ltr" style="unicode-bidi:isolate;">میانگین=82.62, میانه=95.50, انحراف‌معیار=27.86, دامنه=[0.00, 100.00]</span><br>
+                        <b>نمونه مقادیر پرت:</b> <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">61.20, 5.80, 54.30, 53.00, 0.00, 18.20, 14.60, 39.20</span></span>
+                         (و <span dir="ltr" style="unicode-bidi:isolate;">4304</span> مورد دیگر)
+                    </div>
+                </div>
+                <div class="sub-issue">
+                    <div class="sub-issue-title"><span dir="ltr" style="unicode-bidi:isolate;">assessment_score</span>
+                        <span class="badge badge-yellow"><span dir="ltr" style="unicode-bidi:isolate;">47 outlier (0.30%)</span></span>
+                        <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">IQR</span></span> <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">Z-Score</span></span> <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">Modified Z-Score (MAD)</span></span>
+                    </div>
+                    <div class="sub-issue-desc">
+                        <b>دلیل انتخاب روش:</b> حجم داده معتبر: 15674. چولگی (Skewness) = -0.15 → توزیع نسبتاً متقارن است. چولگی پایین است، بنابراین Z-Score نیز به‌عنوان روش مکمل معتبر اجرا شد.<br>
+                        <b>بازه نرمال (IQR):</b> <span dir="ltr" style="unicode-bidi:isolate;">54.70 تا 109.10</span><br>
+                        <b>آمار توصیفی:</b> <span dir="ltr" style="unicode-bidi:isolate;">میانگین=81.76, میانه=81.80, انحراف‌معیار=9.69, دامنه=[43.10, 100.00]</span><br>
+                        <b>نمونه مقادیر پرت:</b> <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">52.40, 47.00, 54.00, 52.50, 54.60, 50.30, 53.30, 54.60</span></span>
+                         (و <span dir="ltr" style="unicode-bidi:isolate;">39</span> مورد دیگر)
+                    </div>
+                </div>
+                <div class="sub-issue">
+                    <div class="sub-issue-title"><span dir="ltr" style="unicode-bidi:isolate;">participant_satisfaction_1to5</span>
+                        <span class="badge badge-yellow"><span dir="ltr" style="unicode-bidi:isolate;">319 outlier (1.94%)</span></span>
+                        <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">IQR</span></span> <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">Z-Score</span></span> <span class="badge badge-blue"><span dir="ltr" style="unicode-bidi:isolate;">Modified Z-Score (MAD)</span></span>
+                    </div>
+                    <div class="sub-issue-desc">
+                        <b>دلیل انتخاب روش:</b> حجم داده معتبر: 16478. چولگی (Skewness) = -0.64 → توزیع نسبتاً متقارن است. چولگی پایین است، بنابراین Z-Score نیز به‌عنوان روش مکمل معتبر اجرا شد.<br>
+                        <b>بازه نرمال (IQR):</b> <span dir="ltr" style="unicode-bidi:isolate;">2.15 تا 5.75</span><br>
+                        <b>آمار توصیفی:</b> <span dir="ltr" style="unicode-bidi:isolate;">میانگین=3.90, میانه=4.00, انحراف‌معیار=0.72, دامنه=[1.00, 5.00]</span><br>
+                        <b>نمونه مقادیر پرت:</b> <span class="mono"><span dir="ltr" style="unicode-bidi:isolate;">2.10, 1.10, 2.10, 1.60, 2.10, 2.10, 1.50, 1.20</span></span>
+                         (و <span dir="ltr" style="unicode-bidi:isolate;">311</span> مورد دیگر)
+                    </div>
+                </div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Invalid Values</h2>
+    <p class="section-desc">مقادیری که از نظر منطقی/دامنه‌ای غیرممکن‌اند (مثل سن منفی یا درصد خارج از بازه ۰ تا ۱۰۰)، فارغ از اینکه از نظر آماری Outlier باشند یا نه.</p>
+    <div class="empty-state">✅ بر اساس قواعد شناخته‌شده، مقدار غیرمنطقی/غیرممکنی یافت نشد.</div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Inconsistencies</h2>
+    <p class="section-desc">ناسازگاری در نمایش مقادیر معنایی یکسان: تفاوت حروف بزرگ/کوچک، فاصله‌های اضافی، یا نمایش‌های ناهمگون boolean.</p>
+    <div class="empty-state">✅ ناسازگاری فرمتی/متنی قابل‌توجهی شناسایی نشد.</div>
+</div>
+
+
+<div class="section">
+    <h2><span class="icon-dot"></span> Data Type Issues</h2>
+    <p class="section-desc">ستون‌هایی که نوع ذخیره‌سازی خام آن‌ها (dtype) با محتوای واقعی داده همخوانی ندارد.</p>
+    
+                    <div class="sub-issue">
+                        <div class="sub-issue-title"><span dir="ltr" style="unicode-bidi:isolate;">enrollment_date</span> <span class="badge badge-blue mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></span></div>
+                        <div class="sub-issue-desc">ستون از نظر محتوا تاریخ است اما با dtype «object» (متنی) ذخیره شده است. توصیه: تبدیل به datetime برای امکان مرتب‌سازی و محاسبات زمانی صحیح.</div>
+                    </div>
+                    <div class="sub-issue">
+                        <div class="sub-issue-title"><span dir="ltr" style="unicode-bidi:isolate;">completion_date</span> <span class="badge badge-blue mono"><span dir="ltr" style="unicode-bidi:isolate;">object</span></span></div>
+                        <div class="sub-issue-desc">ستون از نظر محتوا تاریخ است اما با dtype «object» (متنی) ذخیره شده است. توصیه: تبدیل به datetime برای امکان مرتب‌سازی و محاسبات زمانی صحیح.</div>
+                    </div>
+</div>
+
+
+<div class="footer-note">
+    این گزارش صرفاً شامل Profiling و Detection است — هیچ تغییری در داده اصلی اعمال نشده است.<br>
+    برای Cleaning و اصلاح داده، لازم است این عملیات به‌صورت جداگانه و صریح درخواست شود.<br>
+    تولید شده با Data Quality Analyzer — Python / Pandas / Rich
+</div>
+
+</div>
+</body>
+</html>
