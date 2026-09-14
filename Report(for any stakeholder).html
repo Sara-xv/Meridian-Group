@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>گزارش اثربخشی L&D — Meridian Group</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css">
+<style>
+  :root {
+    --wine:#4B1426;       --wine-soft:#f5e6ea;      --wine-line:#e7c9d2;
+    --teal:#17433F;       --teal-soft:#e3ede9;      --teal-deep:#0f2f2c;
+    --sage:#558467;       --sage-soft:#e8f1e9;
+    --cream:#EFEABB;      --cream-deep:#e2d98f;     --page-bg:#faf8ee;
+    --ink:#2c2420;        --muted:#867a5f;
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    font-family: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+    background: var(--page-bg); color: var(--ink); margin:0; padding:0; line-height:1.9; font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page { max-width:920px; margin:0 auto; padding:0 32px 90px; }
+
+  .cover {
+    text-align:center; padding:72px 24px 50px; margin:0 0 40px;
+    background: linear-gradient(135deg, var(--teal) 0%, #1c3f3b 48%, var(--wine) 100%);
+    border-radius:0 0 30px 30px; position:relative; overflow:hidden;
+    box-shadow:0 18px 34px -16px rgba(23,67,63,0.55);
+  }
+  .cover::before {
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 15% 20%, rgba(239,234,187,0.14), transparent 55%),
+               radial-gradient(circle at 85% 85%, rgba(239,234,187,0.10), transparent 50%);
+  }
+  .cover::after {
+    content:""; position:absolute; bottom:22px; left:50%; transform:translateX(-50%);
+    width:110px; height:3px; background:var(--cream); border-radius:4px; opacity:0.85;
+  }
+  .cover h1 { position:relative; font-size:29px; margin-bottom:10px; font-weight:700; color:var(--cream); letter-spacing:-0.2px; }
+  .cover p { position:relative; color:var(--cream); opacity:0.82; font-size:14.5px; font-weight:400; }
+
+  .nav { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:-24px 0 44px; position:relative; z-index:2; }
+  .nav a {
+    text-decoration:none; background:#fff; border:1px solid var(--cream-deep); color:var(--teal);
+    padding:9px 19px; border-radius:20px; font-size:13px; font-weight:600;
+    box-shadow:0 3px 10px rgba(75,20,38,0.10); transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .nav a:hover { background:var(--teal); border-color:var(--teal); color:#fff; }
+
+  section {
+    background:#fff; border:1px solid #ece4c9; border-radius:16px;
+    padding:32px 34px; margin-bottom:30px; scroll-margin-top:20px;
+    box-shadow:0 3px 16px rgba(23,67,63,0.07); position:relative; overflow:hidden;
+  }
+  section::before {
+    content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg, var(--sage), var(--teal) 55%, var(--wine));
+  }
+
+  section h2 {
+    font-size:19.5px; color:var(--teal); border-bottom:2px solid var(--cream);
+    padding-bottom:12px; margin-bottom:8px; font-weight:700;
+  }
+
+  .stakeholder-tag {
+    display:inline-block; background:var(--sage-soft); color:var(--teal); font-size:12px;
+    padding:4px 13px; border-radius:12px; margin-bottom:16px; font-weight:600; letter-spacing:0.2px;
+  }
+
+  .key-finding {
+    background:var(--sage-soft); border-right:4px solid var(--sage); padding:15px 20px;
+    border-radius:8px; margin:18px 0; font-size:15px; color:#26402f;
+  }
+  .key-finding b { color:var(--teal); }
+
+  .caution {
+    background:var(--wine-soft); border-right:4px solid var(--wine); padding:13px 20px;
+    border-radius:8px; margin:18px 0; font-size:13.5px; color:#6d4451;
+  }
+
+  table { width:100%; border-collapse:collapse; margin-top:16px; font-size:14px; }
+  th, td { text-align:right; padding:11px 12px; border-bottom:1px solid #f1ead2; }
+  th { background:var(--teal); color:var(--cream); font-weight:600; }
+  th:first-child { border-radius:8px 0 0 0; }
+  th:last-child { border-radius:0 8px 0 0; }
+  tbody tr:nth-child(even) { background:#fbf9ee; }
+  tbody tr:hover { background:var(--sage-soft); }
+  td b { color:var(--wine); }
+
+  .delta { font-size:11.5px; color:var(--muted); }
+
+  .badge { padding:3px 11px; border-radius:12px; font-size:11.5px; font-weight:600; }
+  .badge-ok { background:var(--sage-soft); color:#2f5b40; }
+  .badge-warn { background:var(--wine-soft); color:var(--wine); }
+  .badge-dim { background:#f1ecd8; color:var(--muted); }
+
+  .big-stat { display:flex; gap:20px; flex-wrap:wrap; margin:18px 0; }
+  .stat-box {
+    background:linear-gradient(160deg, var(--teal), var(--teal-deep));
+    border-radius:12px; padding:20px 22px; flex:1; min-width:160px; text-align:center;
+    box-shadow:0 8px 18px -8px rgba(23,67,63,0.4);
+  }
+  .stat-box .num { font-size:26px; font-weight:700; color:var(--cream); }
+  .stat-box .lbl { font-size:12px; color:var(--cream); opacity:0.82; margin-top:6px; }
+
+  .footer { text-align:center; color:var(--muted); font-size:12px; margin-top:26px; letter-spacing:0.2px; }
+
+  @media print {
+    body { background:#fff; }
+    .nav { display:none; }
+    .cover { box-shadow:none; }
+    section { border:none; box-shadow:none; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>اثربخشی برنامه‌های آموزشی ۲۰۲۳–۲۰۲۵</h1>
+  <p>Meridian Group · گزارش تحلیلی L&D ROI برای تصمیم بودجه‌ی ۲۰۲۶</p>
+</div>
+
+<div class="page">
+
+<div class="nav">
+  <a href="#cfo">CFO</a>
+  <a href="#lnd">مدیر L&D</a>
+  <a href="#dept">مدیران دپارتمان</a>
+  <a href="#hrbp">HRBP</a>
+</div>
+
+<section id="cfo">
+  <span class="stakeholder-tag">برای CFO / مدیرعامل</span>
+  <h2>آیا سرمایه‌گذاری آموزشی توجیه مالی دارد؟</h2>
+
+  <div class="big-stat">
+    <div class="stat-box"><div class="num">$2,732,445</div><div class="lbl">کل هزینه‌ی آموزشی (۲۰۲۳–۲۰۲۵)</div></div>
+    <div class="stat-box"><div class="num">3,368 / 3,500</div><div class="lbl">کارمندان آموزش‌دیده</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th></th><th>عملکرد میانگین (۱–۵)</th><th>نرخ ترفیع</th><th>نرخ خروج</th></tr></thead>
+    <tbody>
+      <tr><td>بدون آموزش</td><td>3.29</td><td>9.85%</td><td>9.85%</td></tr>
+      <tr><td><b>با آموزش</b></td><td><b>3.40</b></td><td><b>17.10%</b></td><td><b>4.57%</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-finding">
+    کارمندان آموزش‌دیده نرخ ترفیعی نزدیک به <b>1.7 برابر</b> و نرخ خروجی
+    حدود <b>2.2 برابر کمتر</b> نسبت به کارمندان بدون آموزش داشته‌اند.
+    این رابطه با کنترل سطح شغلی نیز تا حد زیادی پابرجا مانده است.
+  </div>
+
+  <div class="caution">
+    این یک مطالعه‌ی observational است، نه یک آزمایش تصادفی — افراد خودشان انتخاب کرده‌اند
+    کدام دوره را بگذرانند، پس نمی‌توان علیت قطعی ادعا کرد.
+  </div>
+</section>
+
+<section id="lnd">
+  <span class="stakeholder-tag">برای مدیر L&D</span>
+  <h2>کدام برنامه‌های آموزشی بیشترین اثر را دارند؟</h2>
+
+  <table>
+    <thead><tr><th>دسته‌ی آموزشی</th><th>نرخ ترفیع (آموزش‌دیده)</th><th>نرخ ترفیع (ندیده)</th><th>فاصله (واحد درصد)</th></tr></thead>
+    <tbody>
+        <tr>
+          <td>Compliance</td>
+          <td>17.12%</td>
+          <td>9.93%</td>
+          <td><b>+7.19</b></td>
+        </tr>
+        <tr>
+          <td>Technical</td>
+          <td>20.35%</td>
+          <td>15.58%</td>
+          <td><b>+4.77</b></td>
+        </tr>
+        <tr>
+          <td>Soft Skills</td>
+          <td>19.70%</td>
+          <td>16.16%</td>
+          <td><b>+3.54</b></td>
+        </tr>
+        <tr>
+          <td>Leadership</td>
+          <td>18.91%</td>
+          <td>16.19%</td>
+          <td><b>+2.72</b></td>
+        </tr>
+        <tr>
+          <td>Sales Enablement</td>
+          <td>19.09%</td>
+          <td>16.59%</td>
+          <td><b>+2.50</b></td>
+        </tr>
+        <tr>
+          <td>Customer Experience</td>
+          <td>17.33%</td>
+          <td>16.78%</td>
+          <td><b>+0.55</b></td>
+        </tr>
+    </tbody>
+  </table>
+
+  <div class="key-finding">
+    برخلاف انتظار اولیه، دوره‌های <b>Compliance</b> (که اجباری هستند) بیشترین فاصله را در نرخ
+    ترفیع نشان می‌دهند — نه دوره‌های Leadership.
+  </div>
+
+  <h2 style="font-size:16px; margin-top:28px; border:none;">قابلیت اتکا به تفکیک سطح شغلی</h2>
+  <table>
+    <thead><tr><th>سطح شغلی</th><th>n (آموزش‌دیده)</th><th>n (ندیده)</th><th>فاصله‌ی عملکرد</th><th>نتیجه‌ی آماری</th></tr></thead>
+    <tbody>
+        <tr>
+          <td>Individual Contributor</td>
+          <td>1407</td>
+          <td>68</td>
+          <td>0.161</td>
+          <td><span class="badge badge-ok">معنادار</span></td>
+        </tr>
+        <tr>
+          <td>Senior IC</td>
+          <td>807</td>
+          <td>23</td>
+          <td>-0.013</td>
+          <td><span class="badge badge-warn">معنادار نشد</span></td>
+        </tr>
+        <tr>
+          <td>Team Lead</td>
+          <td>488</td>
+          <td>17</td>
+          <td>0.086</td>
+          <td><span class="badge badge-warn">معنادار نشد</span></td>
+        </tr>
+        <tr>
+          <td>Manager</td>
+          <td>346</td>
+          <td>13</td>
+          <td>0.054</td>
+          <td><span class="badge badge-warn">معنادار نشد</span></td>
+        </tr>
+        <tr>
+          <td>Senior Manager</td>
+          <td>208</td>
+          <td>7</td>
+          <td>0.122</td>
+          <td><span class="badge badge-warn">معنادار نشد</span></td>
+        </tr>
+        <tr>
+          <td>Director</td>
+          <td>112</td>
+          <td>4</td>
+          <td>0.153</td>
+          <td><span class="badge badge-warn">معنادار نشد</span></td>
+        </tr>
+    </tbody>
+  </table>
+  <div class="caution">
+    در سطوح شغلی بالاتر (Senior Manager، Director)، حجم گروه بدون‌آموزش آنقدر کوچک است که
+    آزمون آماری قدرت کافی برای اثبات معناداری ندارد — نه اینکه اثر واقعاً وجود ندارد.
+  </div>
+</section>
+
+<section id="dept">
+  <span class="stakeholder-tag">برای مدیران دپارتمان</span>
+  <h2>وضعیت تیم شما نسبت به میانگین کل شرکت</h2>
+
+  <table>
+    <thead><tr><th>دپارتمان</th><th>تعداد نفرات</th><th>عملکرد میانگین</th><th>هزینه‌ی آموزشی کل</th><th>نرخ خروج</th></tr></thead>
+    <tbody>
+        <tr>
+          <td><b>Customer Support</b></td>
+          <td>826</td>
+          <td>3.38 <span class="delta">(▼ 0.02 نسبت به میانگین کل)</span></td>
+          <td>$619,660</td>
+          <td>5.33% <span class="delta">(▲ 0.56 نسبت به میانگین کل)</span></td>
+        </tr>
+        <tr>
+          <td><b>Engineering</b></td>
+          <td>966</td>
+          <td>3.39 <span class="delta">(▼ 0.01 نسبت به میانگین کل)</span></td>
+          <td>$779,660</td>
+          <td>5.07% <span class="delta">(▲ 0.30 نسبت به میانگین کل)</span></td>
+        </tr>
+        <tr>
+          <td><b>Operations</b></td>
+          <td>640</td>
+          <td>3.42 <span class="delta">(▲ 0.02 نسبت به میانگین کل)</span></td>
+          <td>$491,030</td>
+          <td>4.53% <span class="delta">(▼ 0.24 نسبت به میانگین کل)</span></td>
+        </tr>
+        <tr>
+          <td><b>Sales</b></td>
+          <td>1068</td>
+          <td>3.40 <span class="delta">(― 0.00 نسبت به میانگین کل)</span></td>
+          <td>$842,095</td>
+          <td>4.21% <span class="delta">(▼ 0.56 نسبت به میانگین کل)</span></td>
+        </tr>
+    </tbody>
+  </table>
+  <div class="caution">
+    میانگین کل شرکت: عملکرد 3.40 · نرخ خروج 4.77%
+  </div>
+</section>
+
+<section id="hrbp">
+  <span class="stakeholder-tag">برای HRBP</span>
+  <h2>رابطه‌ی آموزش با نرخ خروج، به تفکیک سطح شغلی</h2>
+
+  <table>
+    <thead><tr><th>سطح شغلی</th><th>نرخ خروج (بدون آموزش)</th><th>نرخ خروج (با آموزش)</th></tr></thead>
+    <tbody>
+        <tr>
+          <td>Individual Contributor</td>
+          <td>7.35%</td>
+          <td>4.05%</td>
+        </tr>
+        <tr>
+          <td>Senior IC</td>
+          <td>8.70%</td>
+          <td>4.71%</td>
+        </tr>
+        <tr>
+          <td>Team Lead</td>
+          <td>17.65%</td>
+          <td>6.15%</td>
+        </tr>
+        <tr>
+          <td>Manager</td>
+          <td>15.38%</td>
+          <td>3.76%</td>
+        </tr>
+        <tr>
+          <td>Senior Manager</td>
+          <td>14.29%</td>
+          <td>5.29%</td>
+        </tr>
+        <tr>
+          <td>Director</td>
+          <td>0.00%</td>
+          <td>4.46%</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <div class="key-finding">
+    در تقریباً همه‌ی سطوح شغلی، نرخ خروج در گروه آموزش‌دیده پایین‌تر است — این الگو فقط
+    محصول میانگین کلی نیست، در سطح تک‌تک گروه‌های شغلی هم دیده می‌شود.
+  </div>
+
+  <div class="caution">
+    این رابطه correlation است، نه اثبات علّی — ممکن است افرادی که از قبل قصد ماندن دارند،
+    بیشتر هم در دوره‌ها ثبت‌نام کنند.
+  </div>
+</section>
+
+</div>
+</body>
+</html>

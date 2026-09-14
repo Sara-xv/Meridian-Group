@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحلیل کسب‌وکار و توصیه‌ها — L&D ROI | Meridian Group</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css">
+<style>
+  :root {
+    --wine:#4B1426;       --wine-soft:#f5e6ea;      --wine-line:#e7c9d2;
+    --teal:#17433F;       --teal-soft:#e3ede9;      --teal-deep:#0f2f2c;
+    --sage:#558467;       --sage-soft:#e8f1e9;
+    --cream:#EFEABB;      --cream-deep:#e2d98f;     --page-bg:#faf8ee;
+    --ink:#2c2420;        --muted:#867a5f;
+    --amber-soft:#f6f0c9; --amber-text:#7a6620;
+  }
+
+  * { box-sizing:border-box; }
+
+  body {
+    font-family: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+    background:var(--page-bg); color:var(--ink); margin:0; padding:0; line-height:1.9; font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page { max-width:920px; margin:0 auto; padding:0 32px 90px; }
+
+  .cover {
+    text-align:center; padding:64px 24px 44px; margin:0 0 40px;
+    background:linear-gradient(135deg, var(--teal) 0%, #1c3f3b 48%, var(--wine) 100%);
+    border-radius:0 0 30px 30px; position:relative; overflow:hidden;
+    box-shadow:0 18px 34px -16px rgba(23,67,63,0.55);
+  }
+  .cover::before {
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(circle at 15% 20%, rgba(239,234,187,0.14), transparent 55%),
+               radial-gradient(circle at 85% 85%, rgba(239,234,187,0.10), transparent 50%);
+  }
+  .cover::after {
+    content:""; position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+    width:110px; height:3px; background:var(--cream); border-radius:4px; opacity:0.85;
+  }
+  .cover .eyebrow { position:relative; color:var(--cream); opacity:0.85; font-size:12.5px; letter-spacing:2px; margin-bottom:12px; font-weight:600; }
+  .cover h1 { position:relative; font-size:26px; margin-bottom:10px; font-weight:700; color:var(--cream); letter-spacing:-0.2px; }
+  .cover p { position:relative; color:var(--cream); opacity:0.82; font-size:14px; font-weight:400; }
+
+  section {
+    background:#fff; border:1px solid #ece4c9; border-radius:16px;
+    padding:30px 32px; margin-bottom:28px; position:relative; overflow:hidden;
+    box-shadow:0 3px 16px rgba(23,67,63,0.07);
+  }
+  section::before {
+    content:""; position:absolute; top:0; right:0; left:0; height:5px;
+    background:linear-gradient(90deg, var(--sage), var(--teal) 55%, var(--wine));
+  }
+  section h2 {
+    font-size:17.5px; display:flex; align-items:center; gap:10px; margin-bottom:16px;
+    color:var(--teal); font-weight:700;
+  }
+  .step-num {
+    background:linear-gradient(160deg, var(--teal), var(--teal-deep)); color:var(--cream);
+    width:28px; height:28px; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;
+    font-weight:700;
+  }
+
+  .problem-text { font-size:15px; color:var(--ink); }
+
+  .insight {
+    background:var(--sage-soft); border-right:3px solid var(--sage); padding:13px 17px;
+    border-radius:8px; margin-bottom:12px; font-size:14.5px; color:#28402f;
+  }
+  .insight b { color:var(--teal); }
+
+  .rec-card {
+    border:1px solid #ece4c9; border-radius:12px; padding:17px 19px; margin-bottom:14px;
+    background:#fffdf6;
+  }
+  .rec-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px; }
+  .rec-title { font-weight:700; font-size:15px; color:var(--wine); }
+  .priority { font-size:11.5px; padding:3px 11px; border-radius:12px; font-weight:600; }
+  .priority-high { background:var(--wine-soft); color:var(--wine); }
+  .priority-mid { background:var(--amber-soft); color:var(--amber-text); }
+  .rec-meta { font-size:12.5px; color:var(--muted); margin-top:8px; }
+
+  .risk-box {
+    background:var(--wine-soft); border:1px solid var(--wine-line); border-radius:10px;
+    padding:17px 21px; font-size:14.5px; color:#5c3743;
+  }
+  .risk-box .num { font-weight:700; color:var(--wine); }
+  .risk-box ul { margin:10px 0 0; padding-right:20px; }
+  .risk-box li { margin-bottom:6px; }
+
+  table { width:100%; border-collapse:collapse; margin-top:12px; font-size:13.5px; }
+  th, td { text-align:right; padding:10px 11px; border-bottom:1px solid #f1ead2; }
+  th { background:var(--teal); color:var(--cream); font-weight:600; }
+  th:first-child { border-radius:8px 0 0 0; }
+  th:last-child { border-radius:0 8px 0 0; }
+  tbody tr:nth-child(even) { background:#fbf9ee; }
+  tbody tr:hover { background:var(--sage-soft); }
+  td b { color:var(--wine); }
+
+  .footer { text-align:center; color:var(--muted); font-size:12px; margin-top:24px; }
+
+  @media print {
+    body { background:#fff; }
+    .cover { box-shadow:none; }
+    section { border:none; box-shadow:none; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="eyebrow">BUSINESS ANALYSIS DOCUMENT</div>
+  <h1>از تحلیل تا تصمیم: توصیه‌های بودجه‌ی L&D ۲۰۲۶</h1>
+  <p>Meridian Group · مبتنی بر تحلیل ۳,۵۰۰ کارمند و ۲.۷۳ میلیون دلار هزینه‌ی آموزشی ۲۰۲۳–۲۰۲۵</p>
+</div>
+
+<div class="page">
+
+<section>
+  <h2><span class="step-num">1</span> Business Problem</h2>
+  <p class="problem-text">
+    واحد L&D در سال گذشته حدود 2,732,445 دلار روی برنامه‌های آموزشی هزینه کرده است.
+    بورد، پیش از تایید بودجه‌ی ۲۰۲۶، خواستار مدرکی داده‌محور است که نشان دهد این هزینه واقعاً
+    روی عملکرد، ترفیع، و ماندگاری کارکنان اثر داشته — نه صرفاً رضایت شرکت‌کنندگان از کلاس‌ها.
+    اگر ROI ثابت نشود، بودجه‌ی سال آینده تا ۵۰٪ کاهش می‌یابد، با اولویت حذف روی دوره‌های
+    Soft Skills و Sales Enablement.
+  </p>
+</section>
+
+<section>
+  <h2><span class="step-num">2</span> Key Insights</h2>
+
+  <div class="insight">
+    <b>عملکرد:</b> کارمندان آموزش‌دیده میانگین عملکرد 3.40
+    در برابر 3.29 دارند — تفاوت با کنترل سطح شغلی
+    هم تا حد زیادی پابرجا مانده است.
+  </div>
+  <div class="insight">
+    <b>ترفیع:</b> نرخ ترفیع در گروه آموزش‌دیده <b>1.7 برابر</b> بیشتر از گروه بدون‌آموزش است
+    (17.1% در برابر 9.8%).
+  </div>
+  <div class="insight">
+    <b>ماندگاری:</b> نرخ خروج در گروه بدون‌آموزش <b>2.2 برابر</b> بیشتر از گروه آموزش‌دیده است
+    (9.8% در برابر 4.6%) — قوی‌ترین سیگنال کل تحلیل.
+  </div>
+  <div class="insight">
+    <b>یافته‌ی غیرمنتظره:</b> دوره‌های <b>Compliance</b> (نه Leadership) بیشترین فاصله در نرخ ترفیع را
+    نشان می‌دهند (+7.19 واحد درصد)، در حالی که <b>Customer Experience</b> کمترین فاصله را دارد
+    (+0.55 واحد درصد).
+  </div>
+
+  <table>
+    <thead><tr><th>دسته‌ی آموزشی</th><th>تعداد آموزش‌دیده</th><th>فاصله‌ی نرخ ترفیع</th></tr></thead>
+    <tbody>
+    <tr>
+      <td>Compliance</td>
+      <td>3359</td>
+      <td><b>+7.19</b> واحد درصد</td>
+    </tr>
+    <tr>
+      <td>Technical</td>
+      <td>914</td>
+      <td><b>+4.77</b> واحد درصد</td>
+    </tr>
+    <tr>
+      <td>Soft Skills</td>
+      <td>660</td>
+      <td><b>+3.53</b> واحد درصد</td>
+    </tr>
+    <tr>
+      <td>Leadership</td>
+      <td>825</td>
+      <td><b>+2.72</b> واحد درصد</td>
+    </tr>
+    <tr>
+      <td>Sales Enablement</td>
+      <td>330</td>
+      <td><b>+2.50</b> واحد درصد</td>
+    </tr>
+    <tr>
+      <td>Customer Experience</td>
+      <td>300</td>
+      <td><b>+0.55</b> واحد درصد</td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2><span class="step-num">3</span> Recommendations</h2>
+
+  <div class="rec-card">
+    <div class="rec-head">
+      <span class="rec-title">بودجه‌ی Compliance و Technical را حفظ و تثبیت کن</span>
+      <span class="priority priority-high">فوری</span>
+    </div>
+    <p>بالاترین رابطه با نرخ ترفیع را نشان می‌دهند؛ کاهش بودجه‌ی این دو دسته بیشترین آسیب را به خط
+    مسیر شغلی کارکنان می‌زند.</p>
+    <div class="rec-meta">مسئول اجرا: مدیر L&D + CFO &nbsp;·&nbsp; بازه: تصمیم بودجه‌ی Q4</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-head">
+      <span class="rec-title">به‌جای حذف کامل Customer Experience، یک پایلوت ۶‌ماهه اجرا کن</span>
+      <span class="priority priority-mid">میان‌مدت</span>
+    </div>
+    <p>کمترین فاصله‌ی نرخ ترفیع را نشان می‌دهد، اما این می‌تواند به دلیل محتوای دوره باشد نه بی‌فایدگی
+    کل دسته. قبل از حذف کامل بودجه، محتوای دوره را بازطراحی و اثرش را دوباره بسنج.</p>
+    <div class="rec-meta">مسئول اجرا: مدیر L&D &nbsp;·&nbsp; بازه: ۶ ماه، قبل از تصمیم بودجه‌ی ۲۰۲۷</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-head">
+      <span class="rec-title">آموزش را به‌عنوان ابزار نگه‌داشت (Retention) هم معرفی کن، نه فقط توسعه</span>
+      <span class="priority priority-high">فوری</span>
+    </div>
+    <p>نرخ خروج در گروه بدون‌آموزش 2.2 برابر بیشتر است. این رابطه به HRBP این امکان را
+    می‌دهد که آموزش را در برنامه‌های نگه‌داشت کارکنان پرریسک هم بگنجاند.</p>
+    <div class="rec-meta">مسئول اجرا: HRBP + مدیر L&D &nbsp;·&nbsp; بازه: فصل آینده</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-head">
+      <span class="rec-title">دسترسی به آموزش را برای سطوح پایین‌تر سازمانی تسهیل کن</span>
+      <span class="priority priority-mid">میان‌مدت</span>
+    </div>
+    <p>سطوح شغلی بالاتر به‌طور طبیعی بیشتر آموزش می‌بینند. برای جلوگیری از تمرکز نامتوازن سرمایه‌گذاری،
+    مسیرهای آموزشی ساده‌تر برای Individual Contributor ها طراحی شود.</p>
+    <div class="rec-meta">مسئول اجرا: مدیر L&D + مدیران دپارتمان &nbsp;·&nbsp; بازه: نیمه‌ی دوم ۲۰۲۶</div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="step-num">4</span> Risk of Inaction</h2>
+  <div class="risk-box">
+    اگر بودجه‌ی L&D بدون در نظر گرفتن این یافته‌ها به‌طور یکسان (یا کور) کاهش یابد:
+    <ul>
+      <li>با فرض ادامه‌ی روند فعلی، گروه بدون‌آموزش (اکنون 132 نفر) با نرخ خروجی نزدیک به
+        <span class="num">9.8%</span> در سال باقی می‌ماند —
+        نزدیک به <span class="num">7 نفر</span> بیشتر از حالتی که همگی آموزش می‌دیدند، به‌صورت بالقوه از سازمان خارج می‌شوند.</li>
+      <li>حذف کورکورانه‌ی Customer Experience ممکن است دسته‌ای را حذف کند که مشکلش اجراست، نه محتوا —
+        بدون بازطراحی، این تصمیم قابل بازگشت نخواهد بود.</li>
+      <li>بدون تفکیک بودجه بر اساس اثر واقعی هر category، تصمیم سال آینده دوباره بدون داده گرفته می‌شود
+        و همین بحث در بودجه‌بندی بعدی تکرار خواهد شد.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2><span class="step-num">5</span> Next Steps</h2>
+  <table>
+    <thead><tr><th>اقدام</th><th>مسئول</th><th>بازه‌ی زمانی</th></tr></thead>
+    <tbody>
+      <tr><td>ارائه‌ی این گزارش به بورد برای تصمیم بودجه‌ی ۲۰۲۶</td><td>مدیر L&D</td><td>قبل از چرخه‌ی بودجه‌بندی Q4</td></tr>
+      <tr><td>بازطراحی محتوای Customer Experience</td><td>مدیر L&D</td><td>۳ ماه آینده</td></tr>
+      <tr><td>تعریف KPI نگه‌داشت مبتنی بر آموزش برای گروه‌های پرریسک</td><td>HRBP</td><td>فصل آینده</td></tr>
+      <tr><td>تکرار این تحلیل به‌صورت نیم‌سالانه با داده‌ی به‌روز</td><td>تحلیل‌گر داده / BA</td><td>هر ۶ ماه</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div>
+</body>
+</html>
