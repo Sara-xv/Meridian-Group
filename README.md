@@ -1,5 +1,7 @@
 # تحلیل اثربخشی برنامه‌های آموزشی (L&D ROI) — Meridian Group
 
+*This document is bilingual; the Persian version appears first, followed by this English version.*
+
 پروژه‌ی تحلیل داده / تحلیل کسب‌وکار / تحلیل منابع انسانی برای پاسخ به یک سوال واحد:
 
 > **آیا ۲.۷۳ میلیون دلار هزینه‌ی آموزشی Meridian Group در بازه‌ی ۲۰۲۳ تا ۲۰۲۵، واقعاً روی عملکرد، ترفیع، و ماندگاری کارکنان اثر داشته است؟**
@@ -83,7 +85,7 @@ Meridian Group/
 
 ## ابزارها و روش‌ها
 
-`Python (pandas, NumPy, SciPy)` · `Jupyter` · تشخیص کیفیت داده به‌صورت کلاس قابل‌استفاده‌ی مجدد · ترکیب چندجدولی با پرهیز از fan-out join · تحلیل stratified با Welch's t-test · تولید گزارش HTML مستقل برای هر ذی‌نفع
+زبان و کتابخانه‌ها: `Python (pandas, NumPy, SciPy)` · `Jupyter` — به‌همراه تشخیص کیفیت داده به‌صورت کلاس قابل‌استفاده‌ی مجدد · ترکیب چندجدولی با پرهیز از fan-out join · تحلیل stratified با Welch's t-test · تولید گزارش HTML مستقل برای هر ذی‌نفع
 
 ---
 
@@ -92,3 +94,102 @@ Meridian Group/
 ۱. مطالعه observational است؛ علیت قطعی قابل اثبات نیست.
 ۲. در برخی سطوح شغلی (مثلاً Director)، حجم گروه کنترل کوچک بود و آزمون آماری قدرت کافی نداشت.
 ۳. رابطه‌ی آموزش با نرخ خروج نیز correlation است — ممکن است افراد باانگیزه‌تر هم بیشتر آموزش دیده باشند هم بیشتر مانده باشند.
+
+---
+---
+
+# L&D Effectiveness Analysis (L&D ROI) — Meridian Group
+
+A Data Analytics / Business Analysis / HR Analytics project built to answer a single question:
+
+> **Did Meridian Group's $2.73 million training investment between 2023 and 2025 actually affect employee performance, promotion, and retention?**
+
+---
+
+## Scenario
+
+Meridian Group is a 3,500-employee holding company with 4 business units (Sales, Engineering, Customer Support, Operations) across 6 countries. Before approving the 2026 L&D budget, the board is demanding data-driven evidence — not just participant satisfaction scores (a similar report was rejected two years ago for exactly this reason).
+
+The full scenario and problem-discovery process are documented in:
+- [`سناریو.pdf`](./سناریو.pdf) *(Scenario)*
+- [`کشف و درک مسئله.pdf`](./کشف%20و%20درک%20مسئله.pdf) *(Problem Discovery)*
+
+---
+
+## Project Structure
+
+```
+Meridian Group/
+├── classes/                          Reusable Python classes
+│   ├── data_quality_analyzer.py      Full data-quality inspection (missing/duplicate/outlier/invalid/formatting)
+│   └── data_info_display.py         Quick summary display for any dataset
+│
+├── datasets/                         Raw data + per-table quality reports
+│   ├── employees.csv
+│   ├── hr_events.csv
+│   ├── performance_records.csv
+│   ├── training_enrollments.csv
+│   ├── training_programs.csv
+│   ├── data_quality_report_*.html    Quality report for each of the 5 tables (output of classes/)
+│   └── ستون ها و معانی هریک.html      Data dictionary
+│
+├── stakeholders/                      Stakeholder map (bilingual, Persian/English)
+│
+├── combined_employee_dataset.parquet  Final merged dataset - one row per employee
+│
+├── Understanding and Cleaning.ipynb   Problem discovery, per-table quality review, cleaning decisions
+├── EDA.ipynb                          Exploratory analysis + stratified deep-dive + final merge
+│
+├── Report(for any stakeholder).html   Findings report, split by each of the 4 stakeholders (CFO/L&D/Depts/HRBP)
+└── Insight.html                       Business Analysis document: actionable recommendations + risk of inaction
+```
+
+---
+
+## Stakeholders
+
+| Stakeholder | Primary Concern |
+|---|---|
+| CFO / CEO | Financial ROI and justification for the $2.8 million cost |
+| L&D Manager | Which of the 31 available courses to continue or discontinue |
+| Department Managers (Sales/Engineering/CS/Ops) | Whether their team benefited from the training |
+| HRBP | The relationship between training and exit rate |
+
+Full details in the `stakeholders/` folder.
+
+---
+
+## Workflow (in order of execution/review)
+
+1. **`سناریو.pdf`** and **`کشف و درک مسئله.pdf`** — understand the project's context and goal
+2. **`datasets/`** — review raw data and each table's quality report (produced with `classes/data_quality_analyzer.py`)
+3. **`Understanding and Cleaning.ipynb`** — documented and executed cleaning decisions
+4. **`EDA.ipynb`** — merges the 5 tables into `combined_employee_dataset.parquet`, exploratory analysis, and stratified deep-dive controlling for `job_level` (to address the selection-bias concern)
+5. **`Report(for any stakeholder).html`** — final findings for each stakeholder
+6. **`Insight.html`** — actionable recommendations and next steps
+
+---
+
+## Key Findings
+
+- Trained employees had a **~1.7x** higher promotion rate and a **~2x** lower exit rate.
+- This relationship largely held up after controlling for job level (to address selection bias).
+- Contrary to the initial hypothesis, **Compliance** courses (not Leadership) show the widest promotion-rate gap.
+- This is an *observational* study, not a randomized experiment — the results are correlational, not definitive proof of causation.
+
+Full details, exact figures, and per-finding limitations are in `Report(for any stakeholder).html` and `Insight.html`.
+
+---
+
+## Tools & Methods
+
+Language and libraries: `Python (pandas, NumPy, SciPy)` · `Jupyter` — along with data-quality inspection as a reusable class · multi-table merging while avoiding fan-out joins · stratified analysis with Welch's t-test · standalone HTML report generation for each stakeholder
+
+---
+
+## Limitations
+
+1. This is an observational study; definitive causation cannot be established.
+2. For some job levels (e.g., Director), the control-group sample size was small, limiting the statistical power of the test.
+3. The relationship between training and exit rate is also correlational — it's possible that more motivated employees are both more likely to train and more likely to stay.
+
